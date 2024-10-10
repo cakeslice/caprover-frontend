@@ -2,6 +2,7 @@ import { CrownTwoTone } from '@ant-design/icons'
 import { Button, Card, Carousel, Input, Modal, Row } from 'antd'
 import React from 'react'
 import { IProFeatures } from '../../models/IProFeatures'
+import { localize } from '../../utils/Language'
 import Toaster from '../../utils/Toaster'
 import ApiComponent from '../global/ApiComponent'
 import NewTabLink from '../global/NewTabLink'
@@ -68,12 +69,16 @@ export default class ProFeatures extends ApiComponent<
         if (!apiData || !apiData.isFeatureFlagEnabled) return <></>
 
         return (
-            <div>
+            <div style={{ animation: 'fadeIn 0.5s ease-in' }}>
+                <style>
+                    {`
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    `}
+                </style>
                 <Card
-                    style={{
-                        height: '100%',
-                        boxShadow: '1px 1px 20px #c6c6c6',
-                    }}
                     title={
                         <div style={{}}>
                             <a
@@ -107,55 +112,90 @@ export default class ProFeatures extends ApiComponent<
         const self = this
 
         const contentStyle = {
-            height: '160px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '10px',
+            fontSize: '1.17em', // This is the default font size for h3
+            minHeight: '160px',
             color: '#fff',
-            lineHeight: '160px',
-            background: '#364d79',
+            background:
+                'radial-gradient(circle at center, #364d79 0%, #283E5B 50%, #1A2338 100%)',
             textAlign: 'center' as 'center',
         }
+
+        const featuresDesc = [
+            localize(
+                'pro_features.two_factor_auth',
+                'Two-Factor Authentication for better security'
+            ),
+            localize('pro_features.login_email_alerts', 'Login email alerts'),
+            localize(
+                'pro_features.build_email_alerts',
+                'Build success and failure email alerts'
+            ),
+            localize(
+                'pro_features.support_open_source',
+                'Last not least, support active development of OpenSource Software!'
+            ),
+        ]
 
         return (
             <div>
                 <div>
-                    Upgrade to <b>CapRover PRO</b> to take advantage of premium
-                    features!
+                    {localize(
+                        'pro_features.upgrade_to_caprover_pro',
+                        'Upgrade to CapRover PRO to take advantage of premium features!'
+                    )}
                 </div>
                 <ul>
-                    {`Two-Factor Authentication for better security
-                    Login email alerts
-                    Build success and failure email alerts
-                    Last not least, support active development of OpenSource Software!`
-                        .split('\n')
-                        .map((it) => (
-                            <li key={it.trim()}>{it.trim()}</li>
-                        ))}
+                    {featuresDesc.map((it) => (
+                        <li key={it.trim()}>{it.trim()}</li>
+                    ))}
                 </ul>
                 <Carousel autoplay>
                     <div>
-                        <h3 style={contentStyle}>
-                            Create a PRO account using an OAuth provider
-                            (Google, Github, etc)
-                        </h3>
+                        <div style={contentStyle}>
+                            {localize(
+                                'pro_features.create_pro_account',
+                                'Create a PRO account using an OAuth provider (Google, Github, etc)'
+                            )}
+                        </div>
                     </div>
                     <div>
-                        <h3 style={contentStyle}>Sign-up for PRO membership</h3>
+                        <div style={contentStyle}>
+                            {localize(
+                                'pro_features.sign_up_for_pro',
+                                'Sign-up for PRO membership'
+                            )}
+                        </div>
                     </div>
                     <div>
-                        <h3 style={contentStyle}>Enjoy Premium features!</h3>
+                        <div style={contentStyle}>
+                            {localize(
+                                'pro_features.enjoy_premium_features',
+                                'Enjoy Premium features!'
+                            )}
+                        </div>
                     </div>
                 </Carousel>
                 <div style={{ height: 30 }} />
                 <Row justify="end">
                     <Button
                         style={{
-                            marginRight: 30,
+                            marginInlineEnd: 30,
                         }}
                         size="large"
                         onClick={() => {
                             self.setState({ apiKeyModalVisible: true })
                         }}
                     >
-                        Enter API Key
+                        {localize(
+                            'pro_features.enter_api_key',
+                            'Enter API Key'
+                        )}
                     </Button>
                     <NewTabLink url="https://pro.caprover.com">
                         <Button
@@ -166,14 +206,25 @@ export default class ProFeatures extends ApiComponent<
                                 borderColor: '#dbae3b',
                             }}
                         >
-                            <b>Upgrade NOW</b>
+                            <b>
+                                {localize(
+                                    'pro_features.upgrade_now',
+                                    'Upgrade NOW'
+                                )}
+                            </b>
                         </Button>
                     </NewTabLink>
                 </Row>
                 <Modal
-                    title="Enter API Key"
+                    title={localize(
+                        'pro_features.enter_api_key',
+                        'Enter API Key'
+                    )}
                     open={self.state.apiKeyModalVisible}
-                    okText="Connect API Key"
+                    okText={localize(
+                        'pro_features.connect_api_key',
+                        'Connect API Key'
+                    )}
                     onOk={() => {
                         self.setState({ apiKeyConnecting: true })
 
@@ -194,7 +245,12 @@ export default class ProFeatures extends ApiComponent<
                     }}
                 >
                     <div>
-                        <p>Enter the purchase API Key here</p>
+                        <p>
+                            {localize(
+                                'pro_features.enter_api_key_here',
+                                'Enter the purchase API Key here'
+                            )}
+                        </p>
 
                         <Input
                             placeholder="apikey_123456789"

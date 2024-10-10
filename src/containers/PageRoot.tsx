@@ -23,6 +23,7 @@ import StorageHelper from '../utils/StorageHelper'
 import Dashboard from './Dashboard'
 import LoggedInCatchAll from './LoggedInCatchAll'
 import Apps from './apps/Apps'
+import ProjectDetailsEdit from './apps/ProjectDetailsEdit'
 import AppDetails from './apps/appDetails/AppDetails'
 import OneClickAppSelector from './apps/oneclick/selector/OneClickAppSelector'
 import OneClickAppConfigPage from './apps/oneclick/variables/OneClickAppConfigPage'
@@ -149,24 +150,24 @@ class PageRoot extends ApiComponent<
                 >
                     <GiftTwoTone
                         style={{
-                            marginLeft: 50,
+                            marginInlineStart: 50,
                         }}
                     />
                     <GiftTwoTone
                         style={{
-                            marginRight: 10,
-                            marginLeft: 3,
+                            marginInlineEnd: 10,
+                            marginInlineStart: 3,
                         }}
                     />
                     Update Available!
                     <GiftTwoTone
                         style={{
-                            marginLeft: 10,
+                            marginInlineStart: 10,
                         }}
                     />
                     <GiftTwoTone
                         style={{
-                            marginLeft: 3,
+                            marginInlineStart: 3,
                         }}
                     />
                 </ClickableLink>
@@ -210,7 +211,7 @@ class PageRoot extends ApiComponent<
                                         src="/icon-512x512.png"
                                         style={{
                                             height: 45,
-                                            marginRight: 10,
+                                            marginInlineEnd: 10,
                                         }}
                                     />
                                     <h3 style={{ color: '#fff', margin: 0 }}>
@@ -224,23 +225,29 @@ class PageRoot extends ApiComponent<
                             <Col span={12}>
                                 <Row justify="end">
                                     <NewTabLink url="https://github.com/caprover/caprover">
-                                        <span style={{ marginRight: 20 }}>
-                                            GitHub
+                                        <span style={{ marginInlineEnd: 20 }}>
+                                            {localize(
+                                                'page_root.github_link',
+                                                'Github'
+                                            )}
                                         </span>
                                     </NewTabLink>
 
                                     <span
                                         style={{
-                                            marginRight: 30,
+                                            marginInlineEnd: 30,
                                         }}
                                     >
                                         <NewTabLink url="https://caprover.com">
-                                            Docs
+                                            {localize(
+                                                'page_root.docs_link',
+                                                'Docs'
+                                            )}
                                         </NewTabLink>
                                     </span>
                                     <span
                                         style={{
-                                            marginRight: 50,
+                                            marginInlineEnd: 50,
                                         }}
                                     >
                                         <DarkModeSwitch />
@@ -254,7 +261,11 @@ class PageRoot extends ApiComponent<
                                                 self.goToLogin()
                                             }}
                                         >
-                                            Logout <LogoutOutlined />
+                                            {localize(
+                                                'page_root.logout',
+                                                'Logout'
+                                            )}
+                                            <LogoutOutlined />
                                         </Button>
                                     </span>
                                 </Row>
@@ -305,7 +316,10 @@ class PageRoot extends ApiComponent<
                                     >
                                         <NewTabLink url="https://github.com/caprover/caprover">
                                             <GithubOutlined />
-                                            GitHub
+                                            {localize(
+                                                'page_root.github_link',
+                                                'Github'
+                                            )}
                                         </NewTabLink>
                                     </div>
 
@@ -316,7 +330,10 @@ class PageRoot extends ApiComponent<
                                     >
                                         <NewTabLink url="https://caprover.com">
                                             <FileTextOutlined />
-                                            Docs
+                                            {localize(
+                                                'page_root.docs_link',
+                                                'Docs'
+                                            )}
                                         </NewTabLink>
                                     </div>
 
@@ -333,7 +350,10 @@ class PageRoot extends ApiComponent<
                                         >
                                             {' '}
                                             <LogoutOutlined />
-                                            Logout
+                                            {localize(
+                                                'page_root.logout',
+                                                'Logout'
+                                            )}
                                         </ClickableLink>
                                     </div>
                                 </Fragment>
@@ -349,7 +369,7 @@ class PageRoot extends ApiComponent<
                                 paddingBottom: 36,
                                 height: '100%',
                                 overflowY: 'scroll',
-                                marginRight: self.state.collapsed
+                                marginInlineEnd: self.state.collapsed
                                     ? 0
                                     : self.props.isMobile
                                     ? -200
@@ -362,6 +382,28 @@ class PageRoot extends ApiComponent<
                                 <Route
                                     path="/dashboard/"
                                     component={Dashboard}
+                                />
+
+                                <Route
+                                    path="/apps/projects/new"
+                                    render={(props) => (
+                                        <ProjectDetailsEdit
+                                            {...props}
+                                            createNewProject={true}
+                                            mainContainer={self.mainContainer}
+                                        />
+                                    )}
+                                />
+
+                                <Route
+                                    path="/apps/projects/:projectId"
+                                    render={(props) => (
+                                        <ProjectDetailsEdit
+                                            {...props}
+                                            createNewProject={false}
+                                            mainContainer={self.mainContainer}
+                                        />
+                                    )}
                                 />
                                 <Route
                                     path="/apps/details/:appName"
