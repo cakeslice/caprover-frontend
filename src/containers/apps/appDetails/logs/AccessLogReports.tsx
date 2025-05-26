@@ -1,7 +1,7 @@
 import { Button, Modal } from 'antd'
 import { Component } from 'react'
-import { localize } from '../../../utils/Language'
-import { AppDetailsTabProps } from './AppDetails'
+import { localize } from '../../../../utils/Language'
+import { AppDetailsTabProps } from './../AppDetails'
 
 interface GoAccessReport {
     name: string
